@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <title>Dark Horse</title>
+</head>
+
+<body>
+    <div class="container w-75 d-flex flex-column align-items-center justify-content-center" style="height: 800px">
+        <p class="fs-5 fw-semibold">회원가입</>
+        <div class="w-100 d-flex flex-column mt-3 bg-body-secondary align-items-center">
+            <form action="/user/register" method="POST"
+                class="w-75 d-flex flex-column justify-content-center align-items-center">
+                <label class="form-label mt-4 w-100">학번</label>
+                <input class="form-control" type="text">
+                <label class="form-label mt-3 w-100">이름</label>
+                <input class="form-control" type="password">
+                <label class="form-label mt-3 w-100">비밀번호</label>
+                <input class="form-control" type="text">
+                <label class="form-label mt-3 w-100">비밀번호 확인</label>
+                <input class="form-control" type="password">
+                <label class="form-label mt-3 w-100">가입코드</label>
+                <input class="form-control" type="password">
+                <button class="btn btn-primary d-block mx-auto mt-4 mb-4" type="submit">
+                    회원가입
+                </button>
+            </form>
+        </div>
+    </div>
+    <script src="/js/bootstrap.min.js"></script>
+</body>
+
+</html>

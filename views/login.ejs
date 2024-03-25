@@ -1,13 +1,30 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/bootstrap.min.css">
-    <title>Darkhorse Login</title>
+    <title>Dark horse</title>
 </head>
+
 <body>
-    <h1 class="text-secondary">Login Page</h1>
+    <div class="container w-75 vh-100 d-flex flex-column align-items-center justify-content-center">
+        <p class="fs-5 fw-semibold">다크호스 레슨신청</>
+        <div class="w-100 d-flex flex-column mt-3 bg-body-secondary align-items-center">
+            <form action="/user/login" method="POST" class="w-75 d-flex flex-column justify-content-center align-items-center">
+                <label class="form-label mt-4 w-100">학번</label>
+                <input class="form-control" type="text">
+                <label class="form-label mt-3 w-100">비밀번호</label>
+                <input class="form-control" type="password">
+                <button class="btn btn-primary d-block mx-auto mt-3 mb-3">로그인</button>
+            </form>
+            <p class="mt-0 mx-auto">
+                <a class="link-dark" href="/user/register">회원가입</a>
+            </p>
+        </div>
+    </div>
     <script src="/js/bootstrap.min.js"></script>
 </body>
+
 </html>

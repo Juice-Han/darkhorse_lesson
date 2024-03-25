@@ -11,3 +11,11 @@ app.listen(8080,()=>{
 app.get('/',(req,res)=>{
     res.render('login.ejs');
 })
+
+app.get('/user/register',(req,res)=>{
+    res.render('register.ejs');
+})
+
+app.post('/user/register',(req,res)=>{
+    res.render('login.ejs');
+})
