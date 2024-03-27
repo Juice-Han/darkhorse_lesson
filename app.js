@@ -19,3 +19,18 @@ app.get('/user/register',(req,res)=>{
 app.post('/user/register',(req,res)=>{
     res.render('login.ejs');
 })
+
+app.post('/user/login',(req,res)=>{
+    //로그인 확인 코드 작성
+    res.redirect('/choose');
+})
+
+app.get('/choose', (req,res)=>{
+    //로그인 정보 세션 없으면 들어가지 접근 못하게 막는 코드 작성
+    res.render('choose.ejs');
+})
+
+app.get('/choose/:day',(req,res)=>{
+    const day = req.params.day
+    res.render('chooseDetail.ejs',{day: day});
+})
