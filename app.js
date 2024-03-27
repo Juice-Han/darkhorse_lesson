@@ -32,5 +32,5 @@ app.get('/choose', (req,res)=>{
 
 app.get('/choose/:day',(req,res)=>{
     const day = req.params.day
-    res.render('chooseDetail.ejs',{day: day});
+    res.render('chooseDetail.ejs',{ day });
 })
