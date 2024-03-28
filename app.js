@@ -31,6 +31,14 @@ app.get('/choose', (req,res)=>{
 })
 
 app.get('/choose/:day',(req,res)=>{
-    const day = req.params.day
-    res.render('chooseDetail.ejs',{ day });
+    let day = 0;
+    if(req.params.day === '0') day = '월요일';
+    else if(req.params.day === '1') day = '화요일';
+    else if(req.params.day === '2') day = '수요일';
+    else if(req.params.day === '3') day = '목요일';
+    else if(req.params.day === '4') day = '금요일';
+    
+    //요일 별 타임 리스트 작성해야함
+    const timeList = ['10:30 ~ 10:45','10:45 : 11:00', '11:00 ~ 11:15', '11:15 ~ 11:30'];
+    res.render('chooseDetail.ejs',{ day, timeList });
 })
