@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <title>Dark horse</title>
+</head>
+
+<body>
+    <div class="container d-flex flex-column align-items-center" style="max-width: 380px;">
+        <h4 class="mt-5">
+            <%=day%>
+        </h4>
+        <div class="mt-4 w-100 bg-light d-flex flex-column">
+            <section>
+                <div class="w-100 fs-5 text-center" style="height: 30px;">10:30 ~ 10:45</div>
+                <div class="accordion accordion-flush w-100" id="accordionFlushExample">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed fs-4" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#flush-collapseOne" aria-expanded="false"
+                                aria-controls="flush-collapseOne">
+                                김노랑
+                            </button>
+                        </h2>
+                        <div id="flush-collapseOne" class="accordion-collapse collapse"
+                            data-bs-parent="#accordionFlushExample">
+                            <div class="accordion-body border">
+                                <div class="fs-5">대기1 : 홍길동</div>
+                                <div class="fs-5">대기2 : 최파랑</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script src="/js/bootstrap.min.js"></script>
+</body>
+
+</html>

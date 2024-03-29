@@ -12,7 +12,9 @@
     <div class="container d-flex flex-column justify-content-center" style="max-width: 380px;">        
         <div class="row bg-light mt-5" style="height: 40px;">
             <div class="col-6 text-center pt-2 fw-bold"><%=day%></div>
-            <button class="btn btn-success col-6">신청 현황 보기</button>
+            <button class="btn btn-success col-6" onclick="goCheckStatus(<%=dayIndex%>)">
+                신청 현황 보기
+            </button>
         </div>
         <div class="mt-4 d-flex flex-column">
             <% timeList.map((element, idx) => { %>  
@@ -28,6 +30,12 @@
         </div>
     </div>
     <script src="/js/bootstrap.min.js"></script>
+    <script>
+        function goCheckStatus(day){
+            //배포 시 origin 재설정 필요
+            window.location.href = `http://localhost:8080/choose/${day}/detail`;
+        }
+    </script>
 </body>
 
 </html>
