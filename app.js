@@ -51,8 +51,26 @@ app.get('/choose/:day/detail', (req, res) => {
     else if (req.params.day === '2') day = '수요일';
     else if (req.params.day === '3') day = '목요일';
     else if (req.params.day === '4') day = '금요일';
-
-
-
-    res.render('chooseStatus.ejs', { day })
+    
+    //요일 별 타임 리스트 작성해야함
+    const timeList = [
+        {
+            time : '10:30 ~ 10:45',
+            first: '김노랑',
+            waiting : [
+                '홍길동',
+                '최파랑'
+            ]
+        },
+        {
+            time : '10:45 ~ 11:00',
+            first: '이시온',
+            waiting : [
+                '강보라',
+                '이초록'
+            ]
+        },
+        
+    ];
+    res.render('chooseStatus.ejs', { day, timeList })
 })
