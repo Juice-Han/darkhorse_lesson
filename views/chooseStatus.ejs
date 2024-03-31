@@ -26,8 +26,7 @@
                                     <%=element.first%>
                                 </button>
                             </h2>
-                            <div id="flush-collapse<%=idx%>" class="accordion-collapse collapse"
-                                data-bs-parent="#accordionFlushExample">
+                            <div id="flush-collapse<%=idx%>" class="accordion-collapse collapse">
                                 <div class="accordion-body">
                                     <% element.waiting.map((person, personIdx) => { %>
                                         <div class="fs-5">대기<%=personIdx+1%> : <%=person%></div>    
@@ -38,7 +37,6 @@
                     </div>
                 </section>
             <% }) %>
-            
         </div>
     </div>
 
