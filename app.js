@@ -16,9 +16,10 @@ app.get('/user/register', (req, res) => {
     res.render('register.ejs');
 })
 
-app.post('/user/register', (req, res) => {
-    res.render('login.ejs');
-})
+//회원가입 기능 삭제
+// app.post('/user/register', (req, res) => {
+//     res.render('login.ejs');
+// })
 
 app.post('/user/login', (req, res) => {
     //로그인 확인 코드 작성
