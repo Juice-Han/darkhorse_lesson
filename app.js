@@ -1,23 +1,28 @@
+const exp = require('constants');
 const express = require('express');
 const { MongoClient } = require('mongodb');
+const bcrypt = require('bcrypt');
 const path = require('path')
 const app = express();
 require('dotenv').config();
 app.set('view engine', 'ejs');
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.urlencoded({ extended: true }))
+app.use(express.json());
 
 const uri = `mongodb+srv://${process.env.MONGODB_CONNECT_ID}:${process.env.MONGODB_CONNECT_PASSWORD}@cluster0.uyhgcoc.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
 const dbName = 'darkhorse_lesson';
+let db;
 const client = new MongoClient(uri);
-async function connectMongoDB(){
-    try{
+async function connectMongoDB() {
+    try {
         await client.connect();
         console.log('Connected to MongoDB');
-        const db = client.db(dbName);
+        db = client.db(dbName);
         app.listen(8080, () => {
             console.log('Listening on 8080 port');
         })
-    }catch(error){
+    } catch (error) {
         console.error('Failed to connect to MongoDB', error);
     }
 }
@@ -36,8 +41,31 @@ app.get('/user/register', (req, res) => {
 //     res.render('login.ejs');
 // })
 
-app.post('/user/login', (req, res) => {
-    //로그인 확인 코드 작성
+app.post('/user/login', async (req, res) => {
+    let { name, password } = req.body
+    //만약 아이디 값이 공백으로 채워져있다면 오류 표시
+    if (!name.trim()) {
+        res.render('loginError.ejs', { message: "이름을 입력해주세요", name: name });
+        return;
+    }
+    const user = await db.collection('user').findOne({ name: name });
+    //만약 아이디가 존재하지 않는다면 입력받은 비밀번호와 함께 계정 생성
+    if (user === null) {
+        const hashedPassword = await bcrypt.hash(password, 10);
+        db.collection('user').insertOne({ name: name, password: hashedPassword })
+            .catch(err => {
+                console.error('db 유저 생성 실패', err);
+                res.render('loginError.ejs', { message: "계정 생성을 실패하였습니다. 다시 시도해주세요.", name: name });
+                return;
+            })
+    } else { //만약 아이디가 존재한다면 입력받은 비밀번호와 저장된 비밀번호 비교 및 확인
+        const matchPassword = await bcrypt.compare(password, user.password);
+        if (!matchPassword) {
+            res.render('loginError.ejs', { message: '비밀번호가 틀렸습니다.', name: name });
+            return;
+        }
+    }
+    //사용자 세션 생성 코드 작성
     res.redirect('/choose');
 })
 
