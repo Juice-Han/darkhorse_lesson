@@ -1,12 +1,27 @@
 const express = require('express');
+const { MongoClient } = require('mongodb');
 const path = require('path')
 const app = express();
+require('dotenv').config();
 app.set('view engine', 'ejs');
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.listen(8080, () => {
-    console.log('Listening on 8080 port');
-})
+const uri = `mongodb+srv://${process.env.MONGODB_CONNECT_ID}:${process.env.MONGODB_CONNECT_PASSWORD}@cluster0.uyhgcoc.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
+const dbName = 'darkhorse_lesson';
+const client = new MongoClient(uri);
+async function connectMongoDB(){
+    try{
+        await client.connect();
+        console.log('Connected to MongoDB');
+        const db = client.db(dbName);
+        app.listen(8080, () => {
+            console.log('Listening on 8080 port');
+        })
+    }catch(error){
+        console.error('Failed to connect to MongoDB', error);
+    }
+}
+connectMongoDB();
 
 app.get('/', (req, res) => {
     res.render('login.ejs');
@@ -52,26 +67,26 @@ app.get('/choose/:day/detail', (req, res) => {
     else if (req.params.day === '2') day = '수요일';
     else if (req.params.day === '3') day = '목요일';
     else if (req.params.day === '4') day = '금요일';
-    
+
     //요일 별 타임 리스트 작성해야함
     const timeList = [
         {
-            time : '10:30 ~ 10:45',
+            time: '10:30 ~ 10:45',
             first: '김노랑',
-            waiting : [
+            waiting: [
                 '홍길동',
                 '최파랑'
             ]
         },
         {
-            time : '10:45 ~ 11:00',
+            time: '10:45 ~ 11:00',
             first: '이시온',
-            waiting : [
+            waiting: [
                 '강보라',
                 '이초록'
             ]
         },
-        
+
     ];
     res.render('chooseStatus.ejs', { day, timeList })
 })
