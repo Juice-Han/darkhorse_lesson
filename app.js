@@ -1,14 +1,24 @@
-const exp = require('constants');
 const express = require('express');
 const { MongoClient } = require('mongodb');
 const bcrypt = require('bcrypt');
 const path = require('path')
+const session = require('express-session');
 const app = express();
 require('dotenv').config();
 app.set('view engine', 'ejs');
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json());
+app.use(session({
+    resave: false,
+    saveUninitialized: true,
+    secret: process.env.COOKIE_SECRET,
+    cookie: {
+        httpOnly: true,
+        secure: false,
+        maxAge: 1000 * 60 * 5 //5분동안 쿠키 유효
+    }
+}))
 
 const uri = `mongodb+srv://${process.env.MONGODB_CONNECT_ID}:${process.env.MONGODB_CONNECT_PASSWORD}@cluster0.uyhgcoc.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
 const dbName = 'darkhorse_lesson';
@@ -32,11 +42,12 @@ app.get('/', (req, res) => {
     res.render('login.ejs');
 })
 
-app.get('/user/register', (req, res) => {
-    res.render('register.ejs');
-})
-
 //회원가입 기능 삭제
+// app.get('/user/register', (req, res) => {
+//     res.render('register.ejs');
+// })
+
+
 // app.post('/user/register', (req, res) => {
 //     res.render('login.ejs');
 // })
@@ -66,16 +77,26 @@ app.post('/user/login', async (req, res) => {
         }
     }
     //사용자 세션 생성 코드 작성
+    req.session.isLogined = true;
     res.redirect('/choose');
 })
 
 app.get('/choose', (req, res) => {
-    //로그인 정보 세션 없으면 들어가지 접근 못하게 막는 코드 작성
+    //로그인 정보 세션 없으면 접근 불가
+    if(!req.session.isLogined){
+        res.redirect('/');
+        return;
+    }
     const dayList = ['월요일', '화요일', '수요일', '목요일', '금요일']
     res.render('choose.ejs', { dayList });
 })
 
 app.get('/choose/:day', (req, res) => {
+    //로그인 정보 세션 없으면 접근 불가
+    if(!req.session.isLogined){
+        res.redirect('/');
+        return;
+    }
     let day = 0;
     if (req.params.day === '0') day = '월요일';
     else if (req.params.day === '1') day = '화요일';
@@ -89,6 +110,11 @@ app.get('/choose/:day', (req, res) => {
 })
 
 app.get('/choose/:day/detail', (req, res) => {
+    //로그인 정보 세션 없으면 접근 불가
+    if(!req.session.isLogined){
+        res.redirect('/');
+        return;
+    }
     let day = 0;
     if (req.params.day === '0') day = '월요일';
     else if (req.params.day === '1') day = '화요일';
@@ -117,4 +143,8 @@ app.get('/choose/:day/detail', (req, res) => {
 
     ];
     res.render('chooseStatus.ejs', { day, timeList })
+})
+
+app.get('*',(req,res)=> {
+    res.redirect('/');
 })
