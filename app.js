@@ -82,6 +82,9 @@ app.post('/user/login', async (req, res) => {
 })
 
 // TODO: 로그아웃 기능 만들기
+app.post('/logout',(req,res)=>{
+    //로그아웃 코드 작성
+})
 
 app.get('/choose', (req, res) => {
     //로그인 정보 세션 없으면 접근 불가
