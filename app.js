@@ -78,6 +78,7 @@ app.post('/user/login', async (req, res) => {
     }
     //사용자 세션 생성 코드 작성
     req.session.isLogined = true;
+    req.session.name = name;
     res.redirect('/choose');
 })
 
@@ -107,6 +108,11 @@ app.get('/choose/:day', (req, res) => {
     //요일 별 타임 리스트 작성해야함
     const timeList = ['10:30 ~ 10:45', '10:45 : 11:00', '11:00 ~ 11:15', '11:15 ~ 11:30'];
     res.render('chooseDetail.ejs', { dayIndex: req.params.day, day, timeList });
+})
+
+app.post('/choose/:day',(req,res)=>{
+    console.log(req.body);
+    console.log(req.session);
 })
 
 app.get('/choose/:day/detail', (req, res) => {

@@ -23,7 +23,12 @@
                         <p class="m-0"><%=element%></p>
                     </div>
                     <div class="col-4 text-center">
-                        <button class="btn btn-primary">신청</button>
+                        <button class="btn btn-primary" type="submit" form="applyLesson">
+                            신청
+                        </button>
+                        <form action="/choose/<%=dayIndex%>" method="POST" id="applyLesson" class="d-none">
+                            <input name="time" value="<%=element%>">
+                        </form>
                     </div>
                 </div>
             <% }); %>
