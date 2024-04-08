@@ -81,11 +81,6 @@ app.post('/user/login', async (req, res) => {
     res.redirect('/choose');
 })
 
-// TODO: 로그아웃 기능 만들기
-app.post('/logout',(req,res)=>{
-    //로그아웃 코드 작성
-})
-
 app.get('/choose', (req, res) => {
     //로그인 정보 세션 없으면 접근 불가
     if(!req.session.isLogined){
