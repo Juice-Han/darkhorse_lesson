@@ -82,13 +82,32 @@ app.post('/user/login', async (req, res) => {
     res.redirect('/choose');
 })
 
-app.get('/choose', (req, res) => {
+app.get('/choose', async (req, res) => {
     //로그인 정보 세션 없으면 접근 불가
     if(!req.session.isLogined){
         res.redirect('/');
         return;
     }
-    const dayList = ['월요일', '화요일', '수요일', '목요일', '금요일']
+    let dayList = [];
+    const schedule = await db.collection('schedule').find().toArray();
+    schedule.forEach((day)=>{
+        switch(day.day){
+            case 0:
+                dayList.push('월요일');
+                break;
+            case 1:
+                dayList.push('화요일');
+                break;
+            case 2:
+                dayList.push('수요일');
+                break;
+            case 3:
+                dayList.push('목요일');
+                break;
+            case 4:
+                dayList.push('금요일');
+        }
+    })
     res.render('choose.ejs', { dayList });
 })
 
@@ -111,8 +130,14 @@ app.get('/choose/:day', (req, res) => {
 })
 
 app.post('/choose/:day',(req,res)=>{
+    console.log(req.params.day);
     console.log(req.body);
     console.log(req.session);
+    //레슨 신청 정보 저장할 때 필요한 정보
+    // 1. 신청자 이름
+    // 2. 신청 요일
+    // 3. 신청 시간대
+    
 })
 
 app.get('/choose/:day/detail', (req, res) => {
